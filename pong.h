@@ -6,7 +6,7 @@
 #include <pspkernel.h>
 #include <pspdebug.h>
 
-#include "../common/callbacks.h"
+#include "exit.h"
 #include "display.h"
 #include "colors.h"
 

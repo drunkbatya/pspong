@@ -1,5 +1,5 @@
 TARGET = pong
-OBJS = pong.o ../common/callbacks.o display.o
+OBJS = pong.o exit.o display.o
 
 INCDIR =
 CFLAGS = -G0 -Wall -O2
