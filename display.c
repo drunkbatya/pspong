@@ -20,3 +20,32 @@ void guInit(unsigned int *list)
 	sceGuDisplay(GU_TRUE);
 }
 
+void drawRect(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, uint32_t color)
+{
+	t_dot *points = (t_dot *)sceGuGetMemory(5 * sizeof(t_dot));
+
+    points[0].x = x;
+    points[0].y = y;
+    points[0].z = 0;
+    points[1].x = x + size_x;
+    points[1].y = y;
+    points[1].z = 0;
+    points[2].x = x + size_x;
+    points[2].y = y + size_y;
+    points[2].z = 0;
+    points[3].x = x;
+    points[3].y = y + size_y;
+    points[3].z = 0;
+    points[4].x = x;
+    points[4].y = y - 1;
+    points[4].z = 0;
+    sceGuColor(color);
+    sceGuDrawArray(GU_LINE_STRIP, GU_VERTEX_16BIT | GU_TRANSFORM_2D, 5, 0, points);
+}
+
+void drawRectWidth(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, uint32_t color, uint8_t width)
+{
+    while (width--)
+        drawRect(x + width, y + width, size_x - (width * 2), size_y - (width * 2), color);
+}
+

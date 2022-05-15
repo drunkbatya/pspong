@@ -27,5 +27,7 @@ typedef struct s_dot
 } t_dot;
 
 void guInit(unsigned int *list);
+void drawRect(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, uint32_t color);
+void drawRectWidth(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, uint32_t color, uint8_t width);
 
 #endif  // PSPONG_DISPLAY_H_

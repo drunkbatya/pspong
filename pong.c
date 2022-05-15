@@ -16,6 +16,9 @@ int main(int argc, char* argv[])
 		sceGuClearColor(0);
 		sceGuClear(GU_COLOR_BUFFER_BIT);
 
+        drawRectWidth(1, 1, (SCR_WIDTH - 2), (SCR_HEIGHT - 2), RED, 3);
+        drawRectWidth(40, 40, (SCR_WIDTH - 2 - 80), (SCR_HEIGHT - 2 - 80), GREEN, 20);
+
 		sceGuFinish();
 		sceGuSync(0,0);
 		sceDisplayWaitVblankStart();
