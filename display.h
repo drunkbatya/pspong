@@ -3,6 +3,7 @@
 #ifndef PSPONG_DISPLAY_H_
 #define PSPONG_DISPLAY_H_
 
+#include <math.h>
 #include <pspgu.h>
 #include <pspdisplay.h>
 #include <pspkernel.h>

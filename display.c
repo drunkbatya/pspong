@@ -52,17 +52,19 @@ void drawRectWidth(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, uin
 void drawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color)
 {
     t_dot *points;
+    int count;
 
-    points = (t_dot *)sceGuGetMemory(3 * sizeof(t_dot));
-    points[0].x = x;
-    points[0].y = y;
-    points[0].z = 0;
-    points[1].x = x + 10;
-    points[1].y = y + 10;
-    points[1].z = 0;
-    points[2].x = x + 20;
-    points[2].y = y + 20;
-    points[2].z = 0;
+    points = (t_dot *)sceGuGetMemory(8 * radius * sizeof(t_dot));
+    count = -radius;
+    while (count < (radius + 1))
+    {
+        points[count + radius].x = x + count;
+        points[count + radius].y = y + sqrt(pow(radius, 2) - pow(count, 2));
+        points[count + radius].z = 0;
+        points[count + (radius * 2)].x = x + count;
+        points[count + (radius * 2)].y = -points[count + radius].y + (2 * y);
+        count++;
+    }
     sceGuColor(color);
-    sceGuDrawArray(GU_LINE_STRIP, GU_VERTEX_16BIT | GU_TRANSFORM_2D, 3, 0, points);
+    sceGuDrawArray(GU_POINTS, GU_VERTEX_16BIT | GU_TRANSFORM_2D, ((4 * radius) + 1), 0, points);
 }
