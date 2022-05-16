@@ -29,9 +29,17 @@ typedef struct s_dot
     uint16_t z;
 } t_dot;
 
+typedef struct s_dot_f
+{
+    float x;
+    float y;
+    float z;
+} t_dot_f;
+
 void guInit(unsigned int *list);
 void drawRect(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, uint32_t color);
-void drawRectWidth(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, uint32_t color, uint8_t width);
-void drawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color);
+void drawRectWidth(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, uint32_t color, uint16_t width);
+void drawCircle(uint16_t x, uint16_t y, float radius, uint32_t color);
+void drawCircleWidth(uint16_t x, uint16_t y, uint16_t radius, uint32_t color, uint16_t width);
 
 #endif  // PSPONG_DISPLAY_H_

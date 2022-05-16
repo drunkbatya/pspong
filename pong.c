@@ -19,7 +19,9 @@ int main(void)
 
         drawRectWidth(1, 1, (SCR_WIDTH - 2), (SCR_HEIGHT - 2), RED, 3);
         drawRectWidth(40, 40, (SCR_WIDTH - 2 - 80), (SCR_HEIGHT - 2 - 80), GREEN, 20);
-        drawCircle(130, 130, 40, RED);
+        drawCircleWidth(130, 130, 5.5, GREEN, 5);
+        drawCircleWidth(130, 130, 20, RED, 12);
+        drawCircleWidth(130, 130, 60, BLUE, 10);
 
         sceGuFinish();
         sceGuSync(0, 0);

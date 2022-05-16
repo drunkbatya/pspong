@@ -43,29 +43,37 @@ void drawRect(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, uint32_t
     sceGuDrawArray(GU_LINE_STRIP, GU_VERTEX_16BIT | GU_TRANSFORM_2D, 5, 0, points);
 }
 
-void drawRectWidth(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, uint32_t color, uint8_t width)
+void drawRectWidth(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, uint32_t color, uint16_t width)
 {
     while (width--)
         drawRect(x + width, y + width, size_x - (width * 2), size_y - (width * 2), color);
 }
 
-void drawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color)
+void drawCircle(uint16_t x, uint16_t y, float radius, uint32_t color)
 {
-    int real_x;
-    t_dot *points;
+    float real_x;
+    t_dot_f *points;
 
+    if (!radius)
+        return;
     real_x = -radius;
-    points = sceGuGetMemory(((radius * 4) + 1) * sizeof(t_dot));
+    points = sceGuGetMemory(((radius * 4) + 1) * sizeof(t_dot_f));
     while (real_x < radius + 1)
     {
-        points[real_x + radius].x = x + real_x;
-        points[real_x + radius].y = y + sqrt(pow(radius, 2) - pow(real_x, 2));
-        points[real_x + radius].z = 0;
-        points[real_x + (radius * 3)].x = x - real_x;
-        points[real_x + (radius * 3)].y = (2 * y) - points[real_x + radius].y;
-        points[real_x + (radius * 3)].z = 0;
+        points[(int)(real_x + radius)].x = x + real_x;
+        points[(int)(real_x + radius)].y = y + sqrt(pow(radius, 2) - pow(real_x, 2));
+        points[(int)(real_x + radius)].z = 0;
+        points[(int)(real_x + (radius * 3))].x = x - real_x;
+        points[(int)(real_x + (radius * 3))].y = (2 * y) - points[(int)(real_x + radius)].y;
+        points[(int)(real_x + (radius * 3))].z = 0;
         real_x++;
     }
     sceGuColor(color);
-    sceGuDrawArray(GU_LINE_STRIP, GU_VERTEX_16BIT | GU_TRANSFORM_2D, ((radius * 4) + 1), 0, points);
+    sceGuDrawArray(GU_LINE_STRIP, GU_VERTEX_32BITF | GU_TRANSFORM_2D, ((radius * 4) + 1), 0, points);
+}
+
+void drawCircleWidth(uint16_t x, uint16_t y, uint16_t radius, uint32_t color, uint16_t width)
+{
+    while (width--)
+        drawCircle(x, y, radius - width, color);
 }
