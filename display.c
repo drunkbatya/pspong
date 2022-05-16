@@ -22,7 +22,7 @@ void guInit(unsigned int *list)
 
 void drawRect(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, uint32_t color)
 {
-    t_dot *points = (t_dot *)sceGuGetMemory(5 * sizeof(t_dot));
+    t_dot *points = sceGuGetMemory(5 * sizeof(t_dot));
 
     points[0].x = x;
     points[0].y = y;
@@ -51,20 +51,21 @@ void drawRectWidth(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, uin
 
 void drawCircle(uint16_t x, uint16_t y, uint16_t radius, uint32_t color)
 {
+    int real_x;
     t_dot *points;
-    int count;
 
-    points = (t_dot *)sceGuGetMemory(8 * radius * sizeof(t_dot));
-    count = -radius;
-    while (count < (radius + 1))
+    real_x = -radius;
+    points = sceGuGetMemory(((radius * 4) + 1) * sizeof(t_dot));
+    while (real_x < radius + 1)
     {
-        points[count + radius].x = x + count;
-        points[count + radius].y = y + sqrt(pow(radius, 2) - pow(count, 2));
-        points[count + radius].z = 0;
-        points[count + (radius * 2)].x = x + count;
-        points[count + (radius * 2)].y = -points[count + radius].y + (2 * y);
-        count++;
+        points[real_x + radius].x = x + real_x;
+        points[real_x + radius].y = y + sqrt(pow(radius, 2) - pow(real_x, 2));
+        points[real_x + radius].z = 0;
+        points[real_x + (radius * 3)].x = x - real_x;
+        points[real_x + (radius * 3)].y = (2 * y) - points[real_x + radius].y;
+        points[real_x + (radius * 3)].z = 0;
+        real_x++;
     }
     sceGuColor(color);
-    sceGuDrawArray(GU_POINTS, GU_VERTEX_16BIT | GU_TRANSFORM_2D, ((4 * radius) + 1), 0, points);
+    sceGuDrawArray(GU_LINE_STRIP, GU_VERTEX_16BIT | GU_TRANSFORM_2D, ((radius * 4) + 1), 0, points);
 }
