@@ -1,5 +1,5 @@
 TARGET = pong
-OBJS = pong.o exit.o display.o
+OBJS = main.o exit.o display.o pong.o
 
 INCDIR =
 CFLAGS = -G0 -Wall -O2

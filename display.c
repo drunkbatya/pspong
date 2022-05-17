@@ -20,6 +20,20 @@ void guInit(unsigned int *list)
     sceGuDisplay(GU_TRUE);
 }
 
+void drawLine(uint16_t x, uint16_t y, uint16_t x_end, uint16_t y_end, uint32_t color)
+{
+    t_dot *points = sceGuGetMemory(2 * sizeof(t_dot));
+
+    points[0].x = x;
+    points[0].y = y;
+    points[0].z = 0;
+    points[1].x = x_end;
+    points[1].y = y_end;
+    points[1].z = 0;
+    sceGuColor(color);
+    sceGuDrawArray(GU_LINE_STRIP, GU_VERTEX_16BIT | GU_TRANSFORM_2D, 2, 0, points);
+}
+
 void drawRect(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, uint32_t color)
 {
     t_dot *points = sceGuGetMemory(5 * sizeof(t_dot));
@@ -47,6 +61,17 @@ void drawRectWidth(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, uin
 {
     while (width--)
         drawRect(x + width, y + width, size_x - (width * 2), size_y - (width * 2), color);
+}
+
+void drawRectFull(uint16_t x, uint16_t y, uint16_t size_x, uint16_t size_y, uint32_t color)
+{
+    uint16_t width;
+
+    if (size_x % 2)
+        width = (size_x / 2) + 1;
+    else
+        width = (size_x / 2) + 2;
+    drawRectWidth(x, y, size_x, size_y, color, width);
 }
 
 void drawCircle(uint16_t x, uint16_t y, float radius, uint32_t color)
